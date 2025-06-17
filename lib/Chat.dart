@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
+import 'Answer.dart';
 
 class ChatOpen extends StatefulWidget {
   @override
   _ChatOpenState createState() => _ChatOpenState();
 }
 
+Answer ans = Answer();
+
 class _ChatOpenState extends State<ChatOpen> {
   final TextEditingController _controller = TextEditingController();
   final List<Map<String, String>> _messages = [];
-  final List<String> _botReplies = [
-    "Hi there! 👋",
-    "I'm a simple bot.",
-    "I can only respond five times.",
-    "You're doing great!",
-    "Goodbye! 👋"
-  ];
-  int _replyCount = 0;
 
   void _sendMessage(String text) {
     if (text.trim().isEmpty) return;
@@ -23,15 +18,14 @@ class _ChatOpenState extends State<ChatOpen> {
     setState(() {
       _messages.add({"sender": "You", "text": text});
       _controller.clear();
+    });
 
-      if (_replyCount < _botReplies.length) {
-        Future.delayed(Duration(milliseconds: 500), () {
-          setState(() {
-            _messages.add({"sender": "Bot", "text": _botReplies[_replyCount]});
-            _replyCount++;
-          });
-        });
-      }
+    final botReply = ans.getResponse(text);
+
+    Future.delayed(Duration(milliseconds: 500), () {
+      setState(() {
+        _messages.add({"sender": "Bot", "text": botReply});
+      });
     });
   }
 
@@ -50,30 +44,26 @@ class _ChatOpenState extends State<ChatOpen> {
                 final isBot = msg["sender"] == "Bot";
 
                 return Align(
-                  alignment:
-                      isBot ? Alignment.centerLeft : Alignment.centerRight,
+                  alignment: isBot ? Alignment.centerLeft : Alignment.centerRight,
                   child: Row(
-                    mainAxisAlignment: isBot
-                        ? MainAxisAlignment.start
-                        : MainAxisAlignment.end,
+                    mainAxisAlignment:
+                        isBot ? MainAxisAlignment.start : MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       if (isBot) ...[
                         CircleAvatar(
-                          backgroundImage:
-                              AssetImage("assets/bot_avatar.png"),
+                          backgroundImage: AssetImage("assets/bot_avatar.png"),
                           radius: 18,
                         ),
                         const SizedBox(width: 8),
                       ],
                       Flexible(
                         child: Container(
-                          margin:
-                              const EdgeInsets.symmetric(vertical: 5, horizontal: 7),
+                          margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 7),
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
                             color: isBot
-                                ? const Color.fromARGB(255, 120, 61, 109)
+                                ? const Color.fromARGB(255, 144, 69, 114)
                                 : const Color.fromARGB(255, 255, 198, 208),
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -85,14 +75,6 @@ class _ChatOpenState extends State<ChatOpen> {
                           ),
                         ),
                       ),
-                      // Uncomment below to add user avatar
-                      // if (!isBot) ...[
-                      //   const SizedBox(width: 8),
-                      //   CircleAvatar(
-                      //     backgroundImage: AssetImage("assets/images/user_avatar.png"),
-                      //     radius: 18,
-                      //   ),
-                      // ],
                     ],
                   ),
                 );
