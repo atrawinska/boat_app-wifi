@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'RequestHandler.dart';
+import 'Chat.dart';
 
 void main() {
   runApp(const MyApp());
@@ -124,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container( margin: EdgeInsets.fromLTRB(5, 0, 10, 0), child: 
+                        Container( margin: EdgeInsets.fromLTRB(5, 0, 15, 0), child: 
                         ElevatedButton(
                           
                           onPressed: () {
@@ -139,7 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: const Icon(Icons.lightbulb_outline_rounded),
                         ),
                         ),
-       Container( margin: EdgeInsets.fromLTRB(10, 0, 5, 0), child: 
+       Container( margin: EdgeInsets.fromLTRB(15, 0, 5, 0), child: 
                         ElevatedButton(
                           
                           onPressed: () {
@@ -177,6 +178,27 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
+            Container(
+              
+              margin: EdgeInsets.fromLTRB(40, 10, 40, 10),
+              child: Image.asset("assets/map_denmark.png")
+
+
+
+            ),
+            Container(
+              
+              margin: EdgeInsets.fromLTRB(40, 10, 40, 10),
+              child: ElevatedButton(onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ChatOpen()),
+    );},
+    child: Text("Chat"))
+
+
+
+            ),
           ],
         ),
       ),
@@ -186,7 +208,7 @@ class _MyHomePageState extends State<MyHomePage> {
           print("Sent request from button");
         },
         tooltip: 'Red LED',
-        child: const Icon(Icons.lightbulb_outline_rounded),
+        child: const Icon(Icons.question_mark, color: Color.fromARGB(255, 144, 69, 114),),  // i like this: Icons.question_answer),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
