@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'RequestHandler.dart';
 import 'Chat.dart';
+import 'Info.dart';
+final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 void main() {
   runApp(const MyApp());
@@ -57,7 +59,7 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-String baseUrl = 'http://192.168.1.235:5000';
+String baseUrl = 'http://192.168.246.241:5000';
 RequestHandler rh = RequestHandler(baseUrl: baseUrl);
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -70,6 +72,8 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: const Info(),
       appBar: AppBar(
         // TRY THIS: Try changing the color here to a specific color (to
         // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
@@ -203,10 +207,9 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          rh.sendLedCommand('red', 'on');
-          print("Sent request from button");
-        },
+onPressed: () {
+    _scaffoldKey.currentState?.openDrawer();
+  },
         tooltip: 'Red LED',
         child: const Icon(Icons.question_mark, color: Color.fromARGB(255, 144, 69, 114),),  // i like this: Icons.question_answer),
       ), // This trailing comma makes auto-formatting nicer for build methods.

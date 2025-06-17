@@ -32,7 +32,7 @@ class _ChatOpenState extends State<ChatOpen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Chat with Bot")),
+      appBar: AppBar(title: Text("Chat with Kowalski")),
       body: Column(
         children: [
           Expanded(
